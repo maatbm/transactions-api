@@ -16,6 +16,13 @@ import java.util.List;
 public class TransactionService {
     private final List<TransactionReqDto> transactionsList = new ArrayList<>();
 
+    public void addNewTransaction(TransactionReqDto transactionReqDto, String processId) {
+        log.info("[ID: {}] Service: start add transaction process", processId);
+        this.validateNewTransaction(transactionReqDto, processId);
+        transactionsList.add(transactionReqDto);
+        log.info("[ID: {}] Service: transaction add sucessful", processId);
+    }
+
     private void validateNewTransaction(TransactionReqDto transaction, String processId){
         log.info("[ID: {}] Service: start transaction validation", processId);
         if(transaction.dataHora().isAfter(OffsetDateTime.now())){
