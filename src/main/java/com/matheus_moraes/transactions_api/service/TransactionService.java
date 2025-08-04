@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TransactionService {
+    private final List<TransactionReqDto> transactionsList = new ArrayList<>();
 
     
 }
