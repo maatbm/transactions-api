@@ -29,6 +29,15 @@ public class TransactionService {
         log.info("[ID: {}] Service: delete all transactions sucessful", processId);
     }
 
+    public List<TransactionReqDto> getTransactionsListPerTimeInterval(Long timeInterlval, String processId) {
+        log.info("[ID: {}] Service: get transactions list per time interval", processId);
+        OffsetDateTime inteval = OffsetDateTime.now().minusSeconds(timeInterlval);
+        return transactionsList
+                .stream()
+                .filter(transaction -> transaction.dataHora().isAfter(inteval))
+                .toList();
+    }
+
     private void validateNewTransaction(TransactionReqDto transaction, String processId){
         log.info("[ID: {}] Service: start transaction validation", processId);
         if(transaction.dataHora().isAfter(OffsetDateTime.now())){
