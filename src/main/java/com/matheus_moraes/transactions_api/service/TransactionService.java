@@ -23,6 +23,12 @@ public class TransactionService {
         log.info("[ID: {}] Service: transaction add sucessful", processId);
     }
 
+    public void deleteAllTransactions(String processId){
+        log.info("[ID: {}] Service: start delete all transactions process", processId);
+        transactionsList.clear();
+        log.info("[ID: {}] Service: delete all transactions sucessful", processId);
+    }
+
     private void validateNewTransaction(TransactionReqDto transaction, String processId){
         log.info("[ID: {}] Service: start transaction validation", processId);
         if(transaction.dataHora().isAfter(OffsetDateTime.now())){
