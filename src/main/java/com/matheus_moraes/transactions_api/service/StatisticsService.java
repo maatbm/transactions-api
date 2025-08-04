@@ -16,14 +16,16 @@ public class StatisticsService {
     private final TransactionService transactionService;
 
     public StatisticsResDto generateStatisticsPerTimeInterval(Long timeInterval, String processid) {
-        log.info("[ID: {}] Service: start generation statistics for time interval: {}", processid, timeInterval);
+        log.info("[ID: {}] Service: Starting statistics generation for time interval of {} seconds.", processid, timeInterval);
         List<TransactionReqDto> transactionsList = transactionService.getTransactionsListPerTimeInterval(timeInterval, processid);
         if (transactionsList.isEmpty()) {
-            log.info("[ID: {}] Service: transactions list per time interval is empty, returning 0", processid);
+            log.info("[ID: {}] Service: Transaction list is empty for the given interval. Returning zeroed statistics.", processid);
             return new StatisticsResDto(0L, 0.0, 0.0, 0.0, 0.0);
         }
-        DoubleSummaryStatistics stats = transactionsList.stream().mapToDouble(TransactionReqDto::valor).summaryStatistics();
-        log.info("[ID: {}] Service: Statistics generated successfully. Count: {}, Sum: {}, Avg: {}, Min: {}, Max: {}",
+        DoubleSummaryStatistics stats = transactionsList.stream()
+                .mapToDouble(TransactionReqDto::valor)
+                .summaryStatistics();
+        log.info("[ID: {}] Service: Statistics generated successfully. [Count={}, Sum={}, Avg={}, Min={}, Max={}]",
                 processid,
                 stats.getCount(),
                 stats.getSum(),
