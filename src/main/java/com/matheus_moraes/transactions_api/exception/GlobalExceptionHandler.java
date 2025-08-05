@@ -14,4 +14,9 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public void unprocessableEntityExceptionHandler() {
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void httpMessageNotReadableException() {
+    }
 }
