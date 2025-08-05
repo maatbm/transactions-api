@@ -5,7 +5,6 @@ import com.matheus_moraes.transactions_api.service.StatisticsService;
 import com.matheus_moraes.transactions_api.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,10 +16,11 @@ public class StatisticsController {
     private final ControllerUtils controllerUtils;
 
     @GetMapping
-    public void getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
+    public StatisticsResDto getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
         String processId = controllerUtils.generateProcessId();
         log.info("[ID: {}] Controller: Received request to get statistics for time interval: {} seconds.", processId, timeInterval);
         StatisticsResDto statistics = statisticsService.generateStatisticsPerTimeInterval(timeInterval, processId);
         log.info("[ID: {}] Controller: Statistics generated successfully. Returning statistics.", processId);
+        return statistics;
     }
 }
