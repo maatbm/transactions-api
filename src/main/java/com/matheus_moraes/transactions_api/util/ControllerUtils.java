@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Service
 public class ControllerUtils {
-    public String generateProcessId(){
+    public String generateProcessId() {
         return UUID.randomUUID().toString();
     }
 }
