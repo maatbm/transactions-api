@@ -17,7 +17,6 @@ public class StatisticsController {
     private final ControllerUtils controllerUtils;
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public void getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
         String processId = controllerUtils.generateProcessId();
         log.info("[ID: {}] Controller: Received request to get statistics for time interval: {} seconds.", processId, timeInterval);

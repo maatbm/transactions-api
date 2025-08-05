@@ -27,7 +27,6 @@ public class TransactionController {
     }
 
     @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
     public void deleteAllTransactions() {
         String processId = controllerUtils.generateProcessId();
         log.info("[ID: {}] Controller: Received request to delete all transactions.", processId);
