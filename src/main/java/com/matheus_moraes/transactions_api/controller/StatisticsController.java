@@ -5,11 +5,8 @@ import com.matheus_moraes.transactions_api.service.StatisticsService;
 import com.matheus_moraes.transactions_api.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/estatistica")
@@ -20,11 +17,11 @@ public class StatisticsController {
     private final ControllerUtils controllerUtils;
 
     @GetMapping
-    public ResponseEntity<StatisticsResDto> getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
+    @ResponseStatus(HttpStatus.OK)
+    public void getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
         String processId = controllerUtils.generateProcessId();
         log.info("[ID: {}] Controller: Received request to get statistics for time interval: {} seconds.", processId, timeInterval);
         StatisticsResDto statistics = statisticsService.generateStatisticsPerTimeInterval(timeInterval, processId);
         log.info("[ID: {}] Controller: Statistics generated successfully. Returning statistics.", processId);
-        return ResponseEntity.ok(statistics);
     }
 }
