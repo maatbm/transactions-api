@@ -3,6 +3,9 @@ package com.matheus_moraes.transactions_api.controller;
 import com.matheus_moraes.transactions_api.dto.res.StatisticsResDto;
 import com.matheus_moraes.transactions_api.service.StatisticsService;
 import com.matheus_moraes.transactions_api.util.ControllerUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,11 @@ public class StatisticsController {
     private final ControllerUtils controllerUtils;
 
     @GetMapping
+    @Operation(description = "Generate statistics for transactions over a period of time in seconds")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Statistics generated successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public StatisticsResDto getStatistics(@RequestParam(value = "time", defaultValue = "60") Long timeInterval) {
         String processId = controllerUtils.generateProcessId();
         log.info("[ID: {}] Controller: Received request to get statistics for time interval: {} seconds.", processId, timeInterval);
